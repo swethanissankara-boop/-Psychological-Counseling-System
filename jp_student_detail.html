@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Student #{{ student.id }} - {{ student.student_name }}</title>
+    <style>
+        /* 1. CORE LAYOUT STYLING */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            font-family: 'Segoe UI', Arial, sans-serif; 
+            background: linear-gradient(135deg, #667eea, #764ba2); 
+            min-height: 100vh; 
+            padding: 20px; 
+        }
+        
+        /* 2. THE MAIN CARD */
+        .container { 
+            max-width: 900px; 
+            margin: 0 auto; 
+            background: rgba(255, 255, 255, 0.95); 
+            backdrop-filter: blur(20px); 
+            border-radius: 20px; 
+            padding: 40px; 
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2); 
+        }
+        
+        .header { 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            margin-bottom: 30px; 
+            padding-bottom: 20px; 
+            border-bottom: 2px solid #eee; 
+        }
+        
+        /* 3. BUTTON STYLING */
+        .back-btn { 
+            background: #3498db; 
+            color: white; 
+            padding: 12px 24px; 
+            text-decoration: none; 
+            border-radius: 10px; 
+            font-weight: 600; 
+            transition: all 0.3s; 
+        }
+        .back-btn:hover { background: #2980b9; transform: translateY(-2px); }
+        
+        /* 4. TABLE STYLING */
+        table { 
+            width: 100%; 
+            border-collapse: collapse; 
+            margin-bottom: 30px; 
+            background: white; 
+            border-radius: 12px; 
+            overflow: hidden; 
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1); 
+        }
+        th, td { padding: 15px; text-align: left; border-bottom: 1px solid #eee; }
+        th { 
+            background: linear-gradient(135deg, #f8f9fa, #e9ecef); 
+            font-weight: 600; 
+            color: #2c3e50; 
+            width: 35%; 
+        }
+        
+        /* 5. STATUS BADGES */
+        .status-badge { padding: 6px 12px; border-radius: 20px; font-size: 14px; font-weight: 500; }
+        .status-low { background: #d4edda; color: #155724; }
+        .status-medium { background: #fff3cd; color: #856404; }
+        .status-high { background: #f8d7da; color: #721c24; }
+        .status-notset { background: #e9ecef; color: #6c757d; }
+        .status-yes { background: #d1ecf1; color: #0c5460; }
+        
+        /* 6. ACTION BUTTONS */
+        .action-buttons { display: flex; gap: 15px; justify-content: center; }
+        .edit-btn { background: #f39c12; color: white; padding: 12px 24px; text-decoration: none; border-radius: 10px; font-weight: 600; }
+        .issues-btn { background: #27ae60; color: white; padding: 12px 24px; text-decoration: none; border-radius: 10px; font-weight: 600; }
+        .edit-btn:hover, .issues-btn:hover { transform: translateY(-2px); box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2); }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>👤 Student Details</h1>
+            <a href="/jp/dashboard" class="back-btn">← Back to Dashboard</a>
+        </div>
+        
+        <table>
+            <tr><th>Student ID</th><td><strong>#{{ student.id }}</strong></td></tr>
+            <tr><th>Student Name</th><td><strong>{{ student.student_name }}</strong></td></tr>
+            <tr><th>Guardian Name</th><td>{{ safe_guardian }}</td></tr>
+            <tr><th>Parent Occupation</th><td>{{ safe_occupation }}</td></tr>
+            <tr>
+                <th>Financial Status</th>
+                <td>
+                    <span class="status-badge status-{{ student.financial_status if student.financial_status else 'notset' }}">
+                        {{ safe_financial }}
+                    </span>
+                </td>
+            </tr>
+            <tr><th>Number of Siblings</th><td>{{ safe_siblings }}</td></tr>
+            <tr><th>Hosteller</th><td><span class="status-badge status-yes">{{ hosteller_status }}</span></td></tr>
+            <tr><th>Screen Time</th><td>{{ safe_screen_time }}</td></tr>
+            <tr><th>Sleep Pattern</th><td>{{ safe_sleep_pattern }}</td></tr>
+            <tr><th>Medical History</th><td>{{ safe_medical }}</td></tr>
+            <tr><th>JP Observations</th><td>{{ safe_observation }}</td></tr>
+        </table>
+        
+        <div class="action-buttons">
+            <a href="/student/{{ student.id }}/edit" class="edit-btn">✏️ Edit Student</a>
+            <a href="/student/{{ student.id }}/issues" class="issues-btn">📋 View Issues ({{ student.issues|length }})</a>
+        </div>
+    </div>
+</body>
+</html>

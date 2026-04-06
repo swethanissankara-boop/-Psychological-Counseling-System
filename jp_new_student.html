@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Add New Student</title>
+    <style>
+        body { font-family:"Segoe UI",Arial; background:linear-gradient(135deg,#667eea,#764ba2); min-height:100vh; padding:20px; }
+        .container { max-width:900px; margin:auto; background:rgba(255,255,255,0.95); border-radius:20px; padding:40px; box-shadow:0 15px 40px rgba(0,0,0,0.2); }
+        .form-row { display:grid; grid-template-columns:1fr 1fr; gap:20px; }
+        input, select, textarea { padding:12px; border:2px solid #e1e8ed; border-radius:8px; width:100%; box-sizing:border-box; }
+        .submit-btn { background:#27ae60; color:white; padding:18px 50px; border:none; border-radius:12px; font-size:18px; cursor:pointer; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 style="text-align:center;">➕ Add New Student</h1>
+        <a href="/jp/dashboard" style="background:#3498db; color:white; padding:12px 24px; text-decoration:none; border-radius:10px; display:inline-block; margin-bottom:30px;">← Back to Dashboard</a>
+        
+        <form method="POST">
+            {{ form.hidden_tag() }}
+            
+            <div class="form-row">
+                <div style="display:flex; flex-direction:column;">
+                    {{ form.student_name.label(style="font-weight:600;") }}{{ form.student_name() }}
+                </div>
+                <div style="display:flex; flex-direction:column;">
+                    {{ form.guardian_name.label(style="font-weight:600;") }}{{ form.guardian_name() }}
+                </div>
+            </div>
+            
+            <div class="form-row">
+                <div style="display:flex; flex-direction:column;">
+                    {{ form.parent_occupation.label(style="font-weight:600;") }}{{ form.parent_occupation() }}
+                </div>
+                <div style="display:flex; flex-direction:column;">
+                    {{ form.financial_status.label(style="font-weight:600;") }}{{ form.financial_status() }}
+                </div>
+            </div>
+            
+            <div class="form-row">
+                <div style="display:flex; flex-direction:column;">
+                    {{ form.siblings.label(style="font-weight:600;") }}{{ form.siblings() }}
+                </div>
+                <div style="display:flex; align-items:center;">
+                    {{ form.hosteller() }} <span style="margin-left:10px;font-weight:600;">{{ form.hosteller.label() }}</span>
+                </div>
+            </div>
+            
+            <div class="form-row">
+                <div style="display:flex; flex-direction:column;">
+                    {{ form.screen_time.label(style="font-weight:600;") }}{{ form.screen_time() }}
+                </div>
+                <div style="display:flex; flex-direction:column;">
+                    {{ form.sleep_pattern.label(style="font-weight:600;") }}{{ form.sleep_pattern() }}
+                </div>
+            </div>
+            
+            <div style="display:flex; flex-direction:column; margin-top:20px;">
+                {{ form.medical_history.label(style="font-weight:600;") }}{{ form.medical_history() }}
+            </div>
+            
+            <div style="display:flex; flex-direction:column; margin-top:20px; margin-bottom:30px;">
+                {{ form.jp_observation.label(style="font-weight:600;") }}{{ form.jp_observation() }}
+            </div>
+            
+            <div style="text-align:center;">
+                {{ form.submit(class_="submit-btn") }}
+            </div>
+        </form>
+    </div>
+</body>
+</html>

@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>JP Login - Psychological Counseling</title>
+    <style>
+        body { 
+            font-family: Arial, sans-serif; 
+            padding: 50px; 
+            text-align: center; 
+            background: #f0f2f5; 
+        }
+        .login-container { 
+            background: white; 
+            max-width: 400px; 
+            margin: auto; 
+            padding: 40px; 
+            border-radius: 15px; 
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2); 
+        }
+        .form-group { 
+            margin-bottom: 20px; 
+            text-align: left; 
+        }
+        .form-label { 
+            display: block; 
+            margin-bottom: 8px; 
+            font-weight: bold; 
+            color: #2c3e50; 
+        }
+        .form-control { 
+            width: 100%; 
+            padding: 12px; 
+            border: 1px solid #ddd; 
+            border-radius: 8px; 
+            font-size: 16px; 
+            box-sizing: border-box; 
+        }
+        .form-control:focus {
+            outline: none;
+            border-color: #3498db;
+            box-shadow: 0 0 0 2px rgba(52,152,219,0.2);
+        }
+        .submit-btn { 
+            width: 100%; 
+            padding: 15px 20px; 
+            background: #3498db; 
+            color: white; 
+            border: none; 
+            border-radius: 8px; 
+            font-size: 16px; 
+            font-weight: bold;
+            cursor: pointer; 
+            transition: background 0.3s; 
+        }
+        .submit-btn:hover { 
+            background: #2980b9; 
+        }
+    </style>
+</head>
+<body>
+    <h1 style="color: #2c3e50; margin-bottom: 30px;">🏥 Psychological Counseling</h1>
+    
+    <div class="login-container">
+        <h2 style="color: #34495e; margin-bottom: 25px;">👩‍🎓 JP Login</h2>
+        
+        <form method="POST">
+            {{ form.hidden_tag() }}
+            
+            <div class="form-group">
+                {{ form.username.label(class="form-label") }}
+                {{ form.username(class="form-control", placeholder="Enter your username") }}
+            </div>
+            
+            <div class="form-group">
+                {{ form.password.label(class="form-label") }}
+                {{ form.password(class="form-control", placeholder="Enter your password") }}
+            </div>
+            
+            {{ form.submit(class="submit-btn") }}
+        </form>
+        
+        <div style="margin-top: 25px;">
+            <a href="/" style="color: #7f8c8d; text-decoration: none; font-size: 14px;">← Back to Home</a>
+        </div>
+    </div>
+</body>
+</html>

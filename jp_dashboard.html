@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>JP Dashboard - Psychological Counseling</title>
+    <style>
+        * { margin:0; padding:0; box-sizing:border-box; }
+        body { font-family:'Segoe UI',Tahoma,sans-serif; background:linear-gradient(135deg,#667eea 0%,#764ba2 100%); min-height:100vh; padding:20px; }
+        .navbar { background:rgba(255,255,255,0.95); padding:20px 40px; border-radius:20px; box-shadow:0 8px 32px rgba(0,0,0,0.1); margin-bottom:30px; }
+        .nav-links { display:flex; align-items:center; max-width:1200px; margin:0 auto; justify-content:space-between; }
+        .nav-links a { color:#2c3e50; text-decoration:none; padding:12px 24px; border-radius:25px; font-weight:600; background:rgba(52,152,219,0.1); }
+        .container { max-width:1200px; margin:0 auto; }
+        .students-section { background:rgba(255,255,255,0.95); border-radius:20px; padding:40px; box-shadow:0 10px 40px rgba(0,0,0,0.1); margin-bottom:40px; }
+        .student-card { border:2px solid #e1e8ed; padding:25px; margin:15px 0; border-radius:12px; background:#fff; display:flex; justify-content:space-between; align-items:center; }
+        .btn-view { background:#3498db; color:white; padding:10px 20px; text-decoration:none; border-radius:6px; font-weight:500; display:inline-block; margin-bottom:5px; }
+        .btn-issues { background:#27ae60; color:white; padding:10px 20px; text-decoration:none; border-radius:6px; font-weight:500; }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-links">
+            <div>
+                <a href="/jp/dashboard">📊 Dashboard</a>
+                <a href="/student/new">➕ New Student</a>
+            </div>
+            <div>
+                <a href="/logout">🚪 Logout</a>
+            </div>
+        </div>
+    </nav>
+    
+    <div class="container">
+        <div class="students-section">
+            <h2 style="color:#2c3e50;margin-bottom:20px;">📅 Upcoming Appointments</h2>
+            {% if upcoming_sessions %}
+                {% for item in upcoming_sessions %}
+                <div style="background:#fff3cd; border-left:5px solid #f39c12; padding:15px; margin-bottom:10px; border-radius:6px; display:flex; justify-content:space-between; align-items:center;">
+                    <div>
+                        <strong style="color:#856404;">📅 {{ item.session.session_date.strftime('%b %d, %H:%M') }}</strong> - <b>{{ item.student.student_name }}</b> 
+                        <br><span style="color:#7f8c8d; font-size:0.9em;">Issue: {{ item.issue.issue_name }}</span>
+                    </div>
+                    <a href="/issue/{{ item.issue.id }}/sessions" style="background:#f39c12; color:white; padding:8px 15px; text-decoration:none; border-radius:5px; font-weight:bold;">View</a>
+                </div>
+                {% endfor %}
+            {% else %}
+                <p style='color:#7f8c8d; text-align:center; padding:10px;'>No upcoming sessions scheduled right now.</p>
+            {% endif %}
+        </div>
+
+        <div class="students-section">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:30px;">
+                <h2 style="color:#2c3e50; margin:0;">📚 Your Assigned Students ({{ my_students|length }})</h2>
+                <input type="text" id="searchInput" onkeyup="filterStudents()" placeholder="🔍 Search by name..." style="padding:10px; width:300px; border:2px solid #e1e8ed; border-radius:8px; font-size:16px;">
+            </div>
+            
+            {% if my_students %}
+                {% for student in my_students %}
+                <div class="student-card" data-name="{{ student.student_name.lower() }}">
+                    <div>
+                        <h3 style="color:#2c3e50;margin:0 0 10px 0;">👤 {{ student.student_name }}</h3>
+                        <p style="color:#7f8c8d;margin:5px 0;"><strong>Occupation:</strong> {{ student.parent_occupation or 'Not Set' }}</p>
+                        <p style="color:#7f8c8d;margin:5px 0;"><strong>Financial:</strong> {{ student.financial_status.title() if student.financial_status else 'Not Set' }}</p>
+                        <p style="color:#7f8c8d;margin:5px 0;"><strong>ID:</strong> #{{ student.id }} | <strong>Siblings:</strong> {{ student.siblings or 0 }}</p>
+                    </div>
+                    <div style="text-align:right;">
+                        <a href="/student/{{ student.id }}" class="btn-view">👁️ View Details</a><br>
+                        <a href="/student/{{ student.id }}/issues" class="btn-issues">📋 View Issues ({{ student.issues|length }})</a>
+                    </div>
+                </div>
+                {% endfor %}
+            {% else %}
+                <div style="text-align:center;padding:60px 20px;color:#7f8c8d;">
+                    <h2>📭 No students assigned yet</h2>
+                    <br><a href="/student/new" class="btn-issues">➕ Add First Student</a>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+
+    <script>
+    function filterStudents() {
+        let input = document.getElementById('searchInput').value.toLowerCase();
+        let students = document.getElementsByClassName('student-card');
+        for (let i = 0; i < students.length; i++) {
+            let name = students[i].getAttribute('data-name');
+            students[i].style.display = name.includes(input) ? "" : "none";
+        }
+    }
+    </script>
+</body>
+</html>

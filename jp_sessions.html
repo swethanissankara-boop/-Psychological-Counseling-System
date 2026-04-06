@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Sessions - {{ issue.issue_name }}</title>
+    <style>
+        body { font-family: Arial, sans-serif; background: #f5f5f5; padding: 20px; } 
+        .container { max-width: 1000px; margin: auto; background: white; padding: 30px; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); } 
+        table { width: 100%; border-collapse: collapse; } 
+        th, td { padding: 12px; border-bottom: 1px solid #eee; text-align: left; } 
+        th { background: #f8f9fa; } 
+        .back { background: #3498db; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px; margin-right: 10px; display: inline-block; } 
+        .form-group { margin-bottom: 15px; } 
+        input, select, textarea { width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px; box-sizing: border-box; } 
+        .submit-btn { background: #27ae60; color: white; padding: 15px 30px; border: none; border-radius: 8px; cursor: pointer; font-size: 16px; margin-top: 10px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>📅 Sessions: {{ issue.issue_name }} (Case: {{ issue.case_id }})</h1>
+        
+        <div style="margin-bottom: 30px;">
+            <a href="/student/{{ student.id }}" class="back">← Back to Student</a>
+            <a href="/jp/dashboard" class="back" style="background:#95a5a6;">Dashboard</a>
+        </div>
+        
+        <h3>➕ Add Session</h3>
+        <form method="POST" action="/session/new" style="background: #f8f9fa; padding: 20px; border-radius: 10px; margin-bottom: 40px;">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+            <input type="hidden" name="issue_id" value="{{ issue.id }}">
+            
+            <div style="display:grid; grid-template-columns:1fr 1fr; gap:15px;">
+                <div class="form-group">
+                    <label style="font-weight: bold; display: block; margin-bottom: 5px;">Session Number:</label>
+                    <input type="number" name="session_number" placeholder="e.g., 1" required>
+                </div>
+                <div class="form-group">
+                    <label style="font-weight: bold; display: block; margin-bottom: 5px;">Date/Time:</label>
+                    <input type="datetime-local" name="session_date" required>
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label style="font-weight: bold; display: block; margin-bottom: 5px;">Counselling Status:</label>
+                <select name="counselling_status">
+                    <option value="Planned">Planned</option>
+                    <option value="Completed">Completed</option>
+                    <option value="Cancelled">Cancelled</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label style="font-weight: bold; display: block; margin-bottom: 5px;">Analysis:</label>
+                <textarea name="analysis" rows="3" placeholder="Enter session analysis..."></textarea>
+            </div>
+            <div class="form-group">
+                <label style="font-weight: bold; display: block; margin-bottom: 5px;">Remarks:</label>
+                <textarea name="remarks" rows="3" placeholder="Enter session remarks..."></textarea>
+            </div>
+            
+            <button type="submit" class="submit-btn">➕ Add Session</button>
+        </form>
+        
+        <h3>📊 Recorded Sessions ({{ sessions|length }})</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Session No.</th>
+                    <th>Date</th>
+                    <th>Status</th>
+                    <th>Analysis</th>
+                    <th>Remarks</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for session in sessions %}
+                <tr>
+                    <td><strong>#{{ session.session_number }}</strong></td>
+                    
+                    <td>{{ session.session_date.strftime('%Y-%m-%d %H:%M') if session.session_date else 'N/A' }}</td>
+                    
+                    <td>
+                        <span style="padding: 5px 12px; border-radius: 15px; color: white; font-size: 14px;
+                        background: {{ 'green' if session.counselling_status == 'Completed' else 'gray' if session.counselling_status == 'Cancelled' else 'orange' }};">
+                            {{ session.counselling_status or 'Unknown' }}
+                        </span>
+                    </td>
+                    
+                    <td>
+                        {% if session.analysis %}
+                            {{ session.analysis[:50] }}{{ '...' if session.analysis|length > 50 else '' }}
+                        {% else %}
+                            <em style="color:#999;">No analysis</em>
+                        {% endif %}
+                    </td>
+                    
+                    <td>
+                        {% if session.remarks %}
+                            {{ session.remarks[:50] }}{{ '...' if session.remarks|length > 50 else '' }}
+                        {% else %}
+                            <em style="color:#999;">No remarks</em>
+                        {% endif %}
+                    </td>
+                </tr>
+                {% else %}
+                <tr>
+                    <td colspan="5" style="text-align:center; padding:40px; color:#7f8c8d;">
+                        No sessions recorded yet. Add the first session above 👇
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

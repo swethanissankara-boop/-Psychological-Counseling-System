@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>🏥 Psychological Counseling System</title>
+    <style>
+        body{font-family:"Segoe UI",Arial;background:linear-gradient(135deg,#667eea,#764ba2);min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:20px;}
+        .welcome{text-align:center;color:white;margin-bottom:50px;}
+        .login-grid{display:grid;grid-template-columns:1fr 1fr;gap:40px;max-width:1000px;width:100%;}
+        .login-card{background:rgba(255,255,255,0.95);padding:40px;border-radius:20px;box-shadow:0 20px 40px rgba(0,0,0,0.2);text-align:center;transition:all 0.3s;}
+        .login-card:hover{transform:translateY(-5px);}
+        .admin-card{border-top:5px solid #e74c3c;}
+        .jp-card{border-top:5px solid #27ae60;}
+        h1{font-size:2.5em;color:#2c3e50;margin-bottom:10px;}
+        h2{font-size:1.5em;color:#7f8c8d;margin-bottom:30px;}
+        .login-btn{display:block;width:100%;padding:18px;background:linear-gradient(135deg,#3498db,#2980b9);color:white;text-decoration:none;border-radius:12px;font-size:18px;font-weight:600;margin-top:20px;transition:all 0.3s;}
+        .login-btn:hover{transform:translateY(-3px);box-shadow:0 15px 30px rgba(52,152,219,0.4);}
+        .admin-btn{background:linear-gradient(135deg,#e74c3c,#c0392b) !important;}
+        .jp-btn{background:linear-gradient(135deg,#27ae60,#229954) !important;}
+        @media(max-width:768px){.login-grid{grid-template-columns:1fr;gap:20px;}}
+    </style>
+</head>
+<body>
+    <div class="welcome">
+        <h1>🏥 Psychological Counseling System</h1>
+        <p style="font-size:1.2em;">Choose your role to get started</p>
+    </div>
+    <div class="login-grid">
+        <div class="login-card admin-card">
+            <h1>👨‍💼 Admin Portal</h1>
+            <h2>Assign students to JPs</h2>
+            <a href="/admin/login" class="login-btn admin-btn">🔐 Admin Login</a>
+        </div>
+        <div class="login-card jp-card">
+            <h1>👩‍🎓 JP Portal</h1>
+            <h2>Manage counseling sessions</h2>
+            <a href="/login" class="login-btn jp-btn">🔐 JP Login</a>
+        </div>
+    </div>
+</body>
+</html>

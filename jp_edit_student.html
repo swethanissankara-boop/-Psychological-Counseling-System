@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Edit Student #{{ student.id }}</title>
+    <style>
+        body { font-family:"Segoe UI",Arial; background:linear-gradient(135deg,#667eea,#764ba2); min-height:100vh; padding:20px; }
+        .container { max-width:900px; margin:0 auto; background:rgba(255,255,255,0.95); border-radius:20px; padding:40px; box-shadow:0 15px 40px rgba(0,0,0,0.2); }
+        .header { display:flex; justify-content:space-between; align-items:center; margin-bottom:30px; }
+        .back-btn { background:#95a5a6; color:white; padding:12px 24px; text-decoration:none; border-radius:10px; font-weight:600; }
+        form { display:grid; gap:20px; }
+        .form-row { display:grid; grid-template-columns:1fr 1fr; gap:20px; }
+        .form-group { display:flex; flex-direction:column; }
+        label { font-weight:600; color:#2c3e50; margin-bottom:8px; }
+        input,select,textarea { padding:12px; border:2px solid #e1e8ed; border-radius:8px; font-size:16px; }
+        input:focus,select:focus,textarea:focus { outline:none; border-color:#3498db; box-shadow:0 0 0 3px rgba(52,152,219,0.1); }
+        textarea { height:100px; resize:vertical; }
+        .submit-btn { background:linear-gradient(135deg,#27ae60,#229954); color:white; padding:18px 50px; border:none; border-radius:12px; font-size:18px; font-weight:600; cursor:pointer; }
+        .submit-btn:hover { transform:translateY(-2px); box-shadow:0 10px 25px rgba(39,174,96,0.4); }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>✏️ Edit Student #{{ student.id }}</h1>
+            <a href="/student/{{ student.id }}" class="back-btn">← Cancel</a>
+        </div>
+        
+        <form method="POST">
+            {{ form.hidden_tag() }}
+            <div class="form-row">
+                <div class="form-group">
+                    {{ form.student_name.label() }}
+                    {{ form.student_name(class_="form-control") }}
+                </div>
+                <div class="form-group">
+                    {{ form.guardian_name.label() }}
+                    {{ form.guardian_name(class_="form-control") }}
+                </div>
+            </div>
+            
+            <div class="form-row">
+                <div class="form-group">
+                    {{ form.parent_occupation.label() }}
+                    {{ form.parent_occupation(class_="form-control") }}
+                </div>
+                <div class="form-group">
+                    {{ form.financial_status.label() }}
+                    {{ form.financial_status(class_="form-control") }}
+                </div>
+            </div>
+            
+            <div class="form-row">
+                <div class="form-group">
+                    {{ form.siblings.label() }}
+                    {{ form.siblings(class_="form-control") }}
+                </div>
+                <div class="form-group" style="flex-direction:row; align-items:center; margin-top: 35px;">
+                    {{ form.hosteller(style="width: 20px; height: 20px;") }} 
+                    <span style="margin-left:10px;">{{ form.hosteller.label() }}</span>
+                </div>
+            </div>
+            
+            <div class="form-row">
+                <div class="form-group">
+                    {{ form.screen_time.label() }}
+                    {{ form.screen_time(class_="form-control") }}
+                </div>
+                <div class="form-group">
+                    {{ form.sleep_pattern.label() }}
+                    {{ form.sleep_pattern(class_="form-control") }}
+                </div>
+            </div>
+            
+            <div class="form-group">
+                {{ form.medical_history.label() }}
+                {{ form.medical_history(class_="form-control") }}
+            </div>
+            
+            <div class="form-group">
+                {{ form.jp_observation.label() }}
+                {{ form.jp_observation(class_="form-control") }}
+            </div>
+            
+            <div style="text-align:center;margin-top:30px;">
+                {{ form.submit(class_="submit-btn") }}
+            </div>
+        </form>
+    </div>
+</body>
+</html>
